@@ -33,22 +33,45 @@ class Matrix {
         console.log('\n\n');
     }
 
-    async multiplication_operation_basic(n1, n2) {
+    //method to multiply two values
+    async multiplication(n1, n2) {
         let number = n2 * n1;
         return number;
     }
 
-    async main_division(number_line, division_number_top, division_number_down) {
+
+
+    //method to divide an entire now of the matrix and simplify the values
+    async main_division(number_line, division_number_top, division_number_bottom) {
+        //dividing the values
         for (let i = 0; i < this.lines; i++) {
             let element = this.matrix[number_line][i];
             console.log(element);
-            element[0] = await this.multiplication_operation_basic(element[0], division_number_down);
-            element[1] = await this.multiplication_operation_basic(element[1], division_number_top);
+            element[0] = await this.multiplication(element[0], division_number_bottom);
+            element[1] = await this.multiplication(element[1], division_number_top);
+
+            //sets the top and bottom values to 1 if they are equal
             if(element[0]===element[1]){
                 element[0]=1;
                 element[1]=1;
             }
-        }
+
+            //obtains the largest value of the fraction being the denominator or numerator
+            var bigger;
+            if(element[0]> element[1]){
+                    bigger = element[0];
+            }else{
+                    bigger = element[1];
+            }
+
+            //divide if they are divisible by the same value
+            for(let i=0;i<bigger;i++){
+                if(element[0]%i===0 && element[1]%i===0){
+                    element[0] = element[0]/i;
+                    element[1] = element[1]/i;
+                }
+            }
+            }
     }
 }
 
@@ -62,7 +85,7 @@ async function main() {
     await matrix.createMatrix(elements);
 
     
-    await matrix.main_division(0, 4, 1);
+    await matrix.main_division(1, 3, 1);
 
     //print
     await matrix.print();
