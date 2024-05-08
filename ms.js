@@ -76,6 +76,10 @@ class Matrix {
 
 //main method
 async function main() {
+    /*
+    the number of rows and columns must be changed along with the elements
+    vector for the algorithm to work
+    */
     //elements that will be added to the matrix from left to right
     var elements = [[1,1],[2,1],[3,1],[4,1],[5,1],[6,1],[7,1],[8,1],[9,1]];
     //matrix class object
