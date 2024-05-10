@@ -23,34 +23,57 @@ class Matrix {
             this.matrix.push(line);
         }
     }
+
+    async format(){
+        //if the numerator is zero,the denominator also becomes
+        for(let lines = 0; lines < this.lines; lines++){
+            for (let l = 0; l < this.lines; l++) {
+                let element = this.matrix[lines][l];
+                if(element[0]==0){
+                    element[0]=0;
+                    element[1]=0;
+                }
+            }
+        }
+    
+            //changes to 1 if the numerator equals the denominator
+            for(let lines = 0; lines < this.lines; lines++){
+                for (let i = 0; i < this.lines; i++) {
+                    //get each element
+                    let element = this.matrix[lines][i];
+                    if(element[0] === element[1] && element[0]!==0){
+                        element[0] = 1;
+                        element[1] = 1;
+                    }
+                }
+             }
+    
+             //
+            for(let lines = 0; lines < this.lines; lines++){
+                for (let i = 0; i < this.lines; i++) {
+                    //get each element
+                    let element = this.matrix[lines][i];
+                    if(element[1]<0){
+                        element[0] = element[0] *-1;
+                        element[1] = element[1] *-1;
+                    }
+                }
+             }
+    }
     
     async showMatrix() {
         console.log('\nMatriz:');
-       
         for (let l = 0; l < this.lines; l++) {
-            let numerator = this.matrix[l][0];
-            let denominator = this.matrix[l][1];
-            if ( denominator === 0 || denominator === 1) {
-                console.log(numerator.join('\t'));
-            } else {
-                console.log(numerator.join('\t') + '/' + denominator.join('\t'));
-            }
+                console.log(this.matrix[l].join('\t'));
         }
         console.log('\n');
     }
     
-    
-    
-    
-    
-
     //method to multiply two values
     async multiplicationTwoElements(n1, n2) {
         let number = n2 * n1;
         return number;
     }
-
-
 
     //method to divide an entire now of the matrix and simplify the values
     async fractionDivision(number_line, division_number_top, division_number_bottom) {
@@ -124,21 +147,6 @@ class Matrix {
             element[0]= await this.multiplicationTwoElements(element[0],this.copy[i][1])+ await this.multiplicationTwoElements(element[1],this.copy[i][0]);
             element[1]= await this.multiplicationTwoElements(element[1],this.copy[i][1]);
         }
-
-
-
-         //changes to 1 if the numerator equals the denominator
-         for(let lines = 0; lines < this.lines; lines++){
-            for (let i = 0; i < this.lines; i++) {
-                //get each element
-                let element = this.matrix[lines][i];
-                if(element[0] === element[1]){
-                    element[0] = 1
-                    element[1] = 1;
-                }
-            }
-         }
-        
             
     }
 
@@ -157,10 +165,6 @@ async function main() {
     //create
     await matrix.createMatrix(elements);
 
-    console.log('Antes das operações elementares');
-    await matrix.showMatrix();
-
-    
     //firstBasicOperation(multiplication_number_line, multiplication_number_top, multiplication_number_bottom,sum_number_line)
     await matrix.firstBasicOperation(0, -4, 1,1);
 
@@ -174,8 +178,8 @@ async function main() {
 
      //firstBasicOperation(multiplication_number_line, multiplication_number_top, multiplication_number_bottom,sum_number_line)
      await matrix.firstBasicOperation(1, 6, 1,2);
-    
-    console.log('Depois das operações elementares');
+
+     await matrix.format();
     
     //print
     await matrix.showMatrix();
