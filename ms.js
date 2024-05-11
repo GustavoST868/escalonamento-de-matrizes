@@ -9,7 +9,7 @@ class Matrix {
     }
 
     //method to create the matrix
-    async createMatrix(elements) {
+     createMatrix(elements) {
         var index = 0;
         //go through the lines of the matrix
         for (var l = 0; l < this.lines; l++) {
@@ -24,7 +24,8 @@ class Matrix {
         }
     }
 
-    async format(){
+    //method to improve the way fraction are represented and their simpligicatipn
+     formatFractions(){
         //if the numerator is zero,the denominator also becomes
         for(let lines = 0; lines < this.lines; lines++){
             for (let l = 0; l < this.lines; l++) {
@@ -61,8 +62,9 @@ class Matrix {
              }
     }
     
-    async showMatrix() {
+    showMatrix() {
         console.log('\nMatriz:');
+
         for (let l = 0; l < this.lines; l++) {
                 console.log(this.matrix[l].join('\t'));
         }
@@ -70,18 +72,18 @@ class Matrix {
     }
     
     //method to multiply two values
-    async multiplicationTwoElements(n1, n2) {
+     multiplicationTwoElements(n1, n2) {
         let number = n2 * n1;
         return number;
     }
 
     //method to divide an entire now of the matrix and simplify the values
-    async fractionDivision(number_line, division_number_top, division_number_bottom) {
+     fractionDivision(number_line, division_number_top, division_number_bottom) {
         //dividing the values
         for (let i = 0; i < this.lines; i++) {
             let element = this.matrix[number_line][i];
-            element[0] = await this.multiplicationTwoElements(element[0], division_number_bottom);
-            element[1] = await this.multiplicationTwoElements(element[1], division_number_top);
+            element[0] =  this.multiplicationTwoElements(element[0], division_number_bottom);
+            element[1] =  this.multiplicationTwoElements(element[1], division_number_top);
 
             //sets the top and bottom values to 1 if they are equal
             if(element[0]===element[1]){
@@ -108,35 +110,35 @@ class Matrix {
     }
 
     //sum of two fractions
-    async fractionSum(number_line, sum_number_top, sum_number_bottom) {
+     fractionSum(number_line, sum_number_top, sum_number_bottom) {
         //cycles through the element of the lines
         for (let i = 0; i < this.lines; i++) {
             //get each element
             let element = this.matrix[number_line][i];
             //sum
-            element[0]= await this.multiplicationTwoElements(element[0],sum_number_bottom)+ await this.multiplicationTwoElements(element[1],sum_number_top);
-            element[1]= await this.multiplicationTwoElements(element[1],sum_number_bottom);
+            element[0]=  this.multiplicationTwoElements(element[0],sum_number_bottom)+  this.multiplicationTwoElements(element[1],sum_number_top);
+            element[1]=  this.multiplicationTwoElements(element[1],sum_number_bottom);
         }
     }
 
-    async fractionMutiplication(number_line, multiplication_number_top, multiplication_number_bottom) {
+     fractionMutiplication(number_line, multiplication_number_top, multiplication_number_bottom) {
         //cycles through the element of the lines
         for (let i = 0; i < this.lines; i++) {
             //get each element
             let element = this.matrix[number_line][i];
-            element[0] = await this.multiplicationTwoElements(element[0],multiplication_number_top);
-            element[1] = await this.multiplicationTwoElements(element[1],multiplication_number_bottom);
+            element[0] =  this.multiplicationTwoElements(element[0],multiplication_number_top);
+            element[1] =  this.multiplicationTwoElements(element[1],multiplication_number_bottom);
         }
     }
 
-    async firstBasicOperation(multiplication_number_line, multiplication_number_top, multiplication_number_bottom,sum_number_line) {
+     firstBasicOperation(multiplication_number_line, multiplication_number_top, multiplication_number_bottom,sum_number_line) {
         // Create a deep copy of the row
         this.copy = Array.from(this.matrix[multiplication_number_line], arr => [...arr]);
         
         for (let i = 0; i < this.lines; i++) {
              let element = this.copy[i];
-             element[0] = await this.multiplicationTwoElements(element[0],multiplication_number_top);
-             element[1] = await this.multiplicationTwoElements(element[1],multiplication_number_bottom);
+             element[0] =  this.multiplicationTwoElements(element[0],multiplication_number_top);
+             element[1] =  this.multiplicationTwoElements(element[1],multiplication_number_bottom);
         }
 
          //cycles through the element of the lines
@@ -144,8 +146,8 @@ class Matrix {
             //get each element
             let element = this.matrix[sum_number_line][i];
             //sum
-            element[0]= await this.multiplicationTwoElements(element[0],this.copy[i][1])+ await this.multiplicationTwoElements(element[1],this.copy[i][0]);
-            element[1]= await this.multiplicationTwoElements(element[1],this.copy[i][1]);
+            element[0]=  this.multiplicationTwoElements(element[0],this.copy[i][1])+  this.multiplicationTwoElements(element[1],this.copy[i][0]);
+            element[1]=  this.multiplicationTwoElements(element[1],this.copy[i][1]);
         }
             
     }
@@ -153,7 +155,7 @@ class Matrix {
 }
 
 //main method
-async function main() {
+ function main() {
     /*
     the number of rows and columns must be changed along with the elements
     vector for the algorithm to work
@@ -163,26 +165,27 @@ async function main() {
     //matrix class object
     const matrix = new Matrix(3, 3); 
     //create
-    await matrix.createMatrix(elements);
+     matrix.createMatrix(elements);
 
     //firstBasicOperation(multiplication_number_line, multiplication_number_top, multiplication_number_bottom,sum_number_line)
-    await matrix.firstBasicOperation(0, -4, 1,1);
+     matrix.firstBasicOperation(0, -4, 1,1);
 
     //firstBasicOperation(multiplication_number_line, multiplication_number_top, multiplication_number_bottom,sum_number_line)
-    await matrix.firstBasicOperation(0, -7, 1,2);
+     matrix.firstBasicOperation(0, -7, 1,2);
 
-    await matrix.fractionDivision(1, -3, 1);
-
-     //firstBasicOperation(multiplication_number_line, multiplication_number_top, multiplication_number_bottom,sum_number_line)
-     await matrix.firstBasicOperation(1, -2, 1,0);
+     matrix.fractionDivision(1, -3, 1);
 
      //firstBasicOperation(multiplication_number_line, multiplication_number_top, multiplication_number_bottom,sum_number_line)
-     await matrix.firstBasicOperation(1, 6, 1,2);
+      matrix.firstBasicOperation(1, -2, 1,0);
 
-     await matrix.format();
+     //firstBasicOperation(multiplication_number_line, multiplication_number_top, multiplication_number_bottom,sum_number_line)
+      matrix.firstBasicOperation(1, 6, 1,2);
+
+     //improving fractional representations
+      matrix.formatFractions();
     
     //print
-    await matrix.showMatrix();
+     matrix.showMatrix();
 }
 
 //calls the main method
